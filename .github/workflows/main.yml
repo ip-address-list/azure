@@ -1,0 +1,35 @@
+name: Update
+
+on:
+  schedule:
+    - cron:  '0 0 * * 3'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration release --no-restore
+    - name: Run
+      run: dotnet run
+    - name: Push
+      uses: actions-x/commit@v2
+      with:
+        email: me@example.com
+        name: GitHub Actions
+        branch: main
+        files: 
+            '*.csv *.txt'
+        repository: https://github.com/ip-address-list/azure
+        token: ${{ secrets.GITHUB_TOKEN }}
