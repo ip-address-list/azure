@@ -62,6 +62,8 @@ namespace azure
             System.IO.File.WriteAllText(@"azure-us.csv", String.Join(",", ipAddresses));
             System.IO.File.WriteAllText(@"azure-us-v4.csv", String.Join(",", ipAddresses.Where(ip => ip.IndexOf(":") < 0)));
             System.IO.File.WriteAllText(@"azure-us-v6.csv", String.Join(",", ipAddresses.Where(ip => ip.IndexOf(":") > 0)));
+
+            System.IO.File.Delete(fileName);
         }
     }
 }
